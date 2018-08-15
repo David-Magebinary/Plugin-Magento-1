@@ -129,7 +129,7 @@ class Magento5_Latipay_Helper_Data extends Mage_Core_Helper_Abstract
     public function getLogoByPaymentName(string $paymentName)
     {
         $imageName = 'latipay.jpeg';
-        $baseImageUrl = 'images/magento5/latipay/';
+        $baseImageUrl = 'frontend/base/default/images/magento5/latipay/';
 
         switch ($paymentName) {
             case 'wechat':
@@ -142,6 +142,6 @@ class Magento5_Latipay_Helper_Data extends Mage_Core_Helper_Abstract
                 // do nothing
                 break;
         }
-        return $this->getSkinUrl($baseImageUrl . $imageName);
+        return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . $baseImageUrl . $imageName;
     }
 }

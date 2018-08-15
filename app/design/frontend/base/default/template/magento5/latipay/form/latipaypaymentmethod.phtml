@@ -5,14 +5,15 @@
         <br/>
         <span class="latipay-payment__info"><?php echo $this->__('Latipay offers the above options to make a secure payment.'); ?></span>
         <ul class="latipay-options">
-            <?php foreach ($wallet as $wkey =>$wvalue) : ?>
-            <li class="latipay-options-item">
-                <input name="payment[latipay_method]" id="latipay-method-<?php echo strtolower($wvalue); ?>" type="radio" value="<?php echo strtolower($wvalue); ?>">
-                <label for="latipay-method-<?php echo strtolower($wvalue); ?>"><?php echo 'Pay by ' . $wvalue; ?></label>
-                <div id="<?php echo strtolower($wvalue) ?>-section" style="display: none;">
-                    <img style="max-width: 200px;  vertical-align: middle; margin-bottom: 10px;" src="<?php echo Mage::helper('latipay')->getLogoByPaymentName($wvalue) ?>" />
-                </div>
-            </li>
+            <?php foreach ($wallet as $wkey => $wvalue) : ?>
+                <?php $paymentName = strtolower($wvalue); ?>
+                <li class="latipay-options-item">
+                    <input name="payment[latipay_method]" id="latipay-method-<?php echo $paymentName; ?>" type="radio" value="<?php echo $paymentName; ?>">
+                    <label for="latipay-method-<?php echo $paymentName; ?>"><?php echo 'Pay by ' . $wvalue; ?></label>
+                    <div id="<?php echo $paymentName ?>-section" style="display: none;">
+                        <img style="max-width: 200px;  vertical-align: middle; margin-bottom: 10px;" src="<?php echo Mage::helper('latipay')->getLogoByPaymentName($paymentName) ?>" />
+                    </div>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -20,3 +21,26 @@
 <div>
     <?php echo $this->getMethod()->getConfigData('message');?>
 </div>
+
+<script type="text/javascript">
+    (function($, window, document) {
+        var paymentRadioName = 'input[name="payment[latipay_method]"]',
+            prevBlockId = '#' + $(paymentRadioName).first().val() + '-section';
+        // initialize the condition
+        // First option will be checked and the logo area is visiable
+        $(paymentRadioName).first().attr('checked', 'checked');
+        $(prevBlockId).show();
+
+        $(paymentRadioName).on('change', function () {
+            var paymentName     = $(this).val(),
+                paymentInfoId   = '#' + paymentName + '-section';
+                // hide prev block
+                if (prevBlockId != paymentInfoId) {
+                    $(prevBlockId).hide();
+                }
+                // show current
+                $(paymentInfoId).show();
+                prevBlockId = paymentInfoId;
+        });
+    })(jQuery, window, document);
+</script>
