@@ -5,12 +5,15 @@
         <br/>
         <span class="latipay-payment__info"><?php echo $this->__('Latipay offers the above options to make a secure payment.'); ?></span>
         <ul class="latipay-options">
-            <?php foreach($wallet as $wkey =>$wvalue){ ?>
+            <?php foreach ($wallet as $wkey =>$wvalue) : ?>
             <li class="latipay-options-item">
-            <input name="payment[latipay_method]" id="latipay-method-<?php echo strtolower($wvalue); ?>" type="radio" value="<?php echo strtolower($wvalue); ?>" <?php if($wkey == 0){echo 'checked="checked"';} ?>>
-                <label for="latipay-method-<?php echo strtolower($wvalue); ?>"><?php echo $wvalue; ?></label>
+                <input name="payment[latipay_method]" id="latipay-method-<?php echo strtolower($wvalue); ?>" type="radio" value="<?php echo strtolower($wvalue); ?>">
+                <label for="latipay-method-<?php echo strtolower($wvalue); ?>"><?php echo 'Pay by ' . $wvalue; ?></label>
+                <div id="<?php echo strtolower($wvalue) ?>-section" style="display: none;">
+                    <img style="max-width: 200px;  vertical-align: middle; margin-bottom: 10px;" src="<?php echo Mage::helper('latipay')->getLogoByPaymentName($wvalue) ?>" />
+                </div>
             </li>
-            <?php } ?>
+            <?php endforeach; ?>
         </ul>
     </div>
 </div>

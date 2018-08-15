@@ -120,4 +120,28 @@ class Magento5_Latipay_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $wallet;
     }
+
+    /**
+     * get Logo URL path by payment name
+     * @param  string $paymentName
+     * @return string
+     */
+    public function getLogoByPaymentName(string $paymentName)
+    {
+        $imageName = 'latipay.jpeg';
+        $baseImageUrl = 'images/magento5/latipay/';
+
+        switch ($paymentName) {
+            case 'wechat':
+                $imageName = 'wechatPay.png';
+                break;
+            case 'alipay':
+                $imageName = 'alipay.png';
+                break;
+            default:
+                // do nothing
+                break;
+        }
+        return $this->getSkinUrl($baseImageUrl . $imageName);
+    }
 }
